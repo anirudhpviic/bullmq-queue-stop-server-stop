@@ -11,7 +11,7 @@ export class AddJobService {
 
     async addJob() {
         if (this.queueStopServerStopTesting) {
-            await this.queueStopServerStopTesting.add('job1', { foo: 'bar' });
+            await this.queueStopServerStopTesting.add('job1', { foo: 'bar' }, { attempts: 1 });
         }
     }
 }
