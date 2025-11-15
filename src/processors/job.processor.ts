@@ -8,7 +8,7 @@ export class JobProcessor extends WorkerHost {
     async process(job: Job<any, any, string>) {
         console.log(`Processing job ${job.id}`);
 
-        await new Promise((resolve) => setTimeout(resolve, 5000)); // long job
+        await new Promise((resolve) => setTimeout(resolve, 50000)); // long job
 
         console.log(`Job ${job.id} completed`);
 
