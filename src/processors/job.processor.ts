@@ -2,7 +2,7 @@ import { Processor, WorkerHost, OnWorkerEvent } from '@nestjs/bullmq';
 import { Job } from 'bullmq';
 import { QUEUE } from 'src/bullmq/constant';
 
-@Processor({ name: QUEUE.QUEUE_STOP_SERVER_STOP_TESTING })
+// @Processor({ name: QUEUE.QUEUE_STOP_SERVER_STOP_TESTING })
 export class JobProcessor extends WorkerHost {
 
     async process(job: Job<any, any, string>) {
