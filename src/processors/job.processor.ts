@@ -15,16 +15,17 @@ export class JobProcessor extends WorkerHost {
         return { success: true };
     }
 
-    // Graceful shutdown hook
-    async onModuleDestroy() {
-        console.log('🛑 Gracefully shutting down worker...');
+    async onModuleInit() {
+        process.on('SIGTERM', async () => {
+            console.log("SIGTERM received... starting graceful shutdown");
 
-        // 1. Stop taking new jobs
-        await this.worker.pause(true);
+            await this.worker.pause(true);   // stop taking new jobs
+            console.log("Worker paused");
 
-        // 2. Wait for active jobs to finish
-        await this.worker.close();
+            await this.worker.close();       // finish active job
+            console.log("Worker closed");
 
-        console.log('✅ Worker shutdown complete');
+            process.exit(0);
+        });
     }
 }
