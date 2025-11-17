@@ -9,7 +9,8 @@ export class AppService {
     process.on('SIGINT', async () => {
       console.log("SIGINT received. Stopping queues...");
       await this.stopper.stopAll();
-      await new Promise((r) => setTimeout(r, 65000));
+      // feels like stopper already waiting for the current processing jobs to complete
+      // await new Promise((r) => setTimeout(r, 65000));
       await this.stopper.closeAll();
       process.exit(0);
     });
@@ -17,7 +18,7 @@ export class AppService {
     process.on('SIGTERM', async () => {
       console.log("SIGTERM received. Stopping queues...");
       await this.stopper.stopAll();
-      await new Promise((r) => setTimeout(r, 65000));
+      // await new Promise((r) => setTimeout(r, 65000));
       await this.stopper.closeAll();
       process.exit(0);
     });
