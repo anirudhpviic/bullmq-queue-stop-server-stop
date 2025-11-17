@@ -35,9 +35,11 @@ import { QUEUE } from './constant';
         }),
         BullModule.registerQueue(
             { name: QUEUE.QUEUE_STOP_SERVER_STOP_TESTING },
+            { name: QUEUE.WORKING_CHECK }
         ),
         BullBoardModule.forFeature(
             { name: QUEUE.QUEUE_STOP_SERVER_STOP_TESTING, adapter: BullMQAdapter },
+            { name: QUEUE.WORKING_CHECK, adapter: BullMQAdapter }
         ),
     ]
 })
