@@ -6,6 +6,8 @@ import { BullMqModule } from './bullmq/bull-mq.module';
 import { AddJobModule } from './add-job/add-job.module';
 import { ProcessorsModule } from './processors/processors.module';
 import { QueueStopperModule } from './queue-stopper/queue-stopper.module';
+import { QUEUE } from './bullmq/constant';
+import { BullModule } from '@nestjs/bullmq';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -15,6 +17,7 @@ import { QueueStopperModule } from './queue-stopper/queue-stopper.module';
     AddJobModule,
     ProcessorsModule,
     QueueStopperModule,
+  BullModule.registerQueue({ name: QUEUE.WORKING_CHECK })
   ],
   controllers: [AppController],
   providers: [AppService],
