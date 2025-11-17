@@ -1,9 +1,13 @@
-import { Processor, WorkerHost } from '@nestjs/bullmq';
-import { Job, Worker } from 'bullmq';
+import { InjectQueue, Processor, WorkerHost } from '@nestjs/bullmq';
+import { Optional } from '@nestjs/common';
+import { Job, Queue, Worker } from 'bullmq';
 import { QUEUE } from 'src/bullmq/constant';
 
 @Processor({ name: QUEUE.QUEUE_STOP_SERVER_STOP_TESTING }, { concurrency: 1 })
 export class JobProcessor extends WorkerHost {
+    constructor(@Optional() @InjectQueue(QUEUE.WORKING_CHECK) private workingCheck?: Queue) {
+        super();
+    }
 
     private workerRef: Worker;
 
@@ -24,6 +28,10 @@ export class JobProcessor extends WorkerHost {
     async onModuleInit() {
         process.on('SIGTERM', async () => {
             console.log("SIGTERM RECEIVED");  // <-- MUST SEE THIS
+
+            if (this.workingCheck) {
+                await this.workingCheck.add('check', { foo: 'bar' }, { attempts: 1 });
+            }
 
             await this.workerRef.pause();
             console.log("PAUSED");
