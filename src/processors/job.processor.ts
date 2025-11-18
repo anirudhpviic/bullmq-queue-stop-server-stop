@@ -17,7 +17,7 @@ export class JobProcessor extends WorkerHost {
     async process(job: Job) {
         console.log(`START job ${job.id}`);
 
-        await new Promise((r) => setTimeout(r, 20000)); // long job
+        await new Promise((r) => setTimeout(r, 10000)); // long job
 
         console.log(`END job ${job.id}`);  // <-- KEY CHECKPOINT
 
